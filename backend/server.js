@@ -12,7 +12,7 @@ const authRoutes = require("./routes/authRoutes");
 const app = express();
 
 app.use(cors({
-  origin: "*", credentials: true}));
+  origin: "https://bus-ticketsystem.netlify.app", credentials: true}));
 app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);

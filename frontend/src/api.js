@@ -2,7 +2,10 @@ import axios from "axios";
 
 const api = axios.create({
   baseURL: "https://bus-ticket-system-jytd.onrender.com",
+  timeout: 20000, // 20 seconds
 });
+
+
 
 // auto attach token
 api.interceptors.request.use((config) => {

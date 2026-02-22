@@ -7,16 +7,13 @@ export default function MyBookings() {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const token = localStorage.getItem("token");
-
   const loadBookings = async () => {
     try {
       setLoading(true);
-      const res = await api.get("/api/bookings/my", {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      setBookings(res.data);
+      const res = await api.get("/api/bookings/my"); // token attached by interceptor
+      setBookings(res.data || []);
     } catch (err) {
+      console.error(err);
       alert(err?.response?.data?.message || "Failed to load bookings");
     } finally {
       setLoading(false);
@@ -24,6 +21,7 @@ export default function MyBookings() {
   };
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
     if (!token) {
       alert("Please login first.");
       navigate("/login");
@@ -35,12 +33,11 @@ export default function MyBookings() {
 
   const cancelBooking = async (bookingId) => {
     try {
-      await api.patch(`/api/bookings/${bookingId}/cancel`, {}, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await api.patch(`/api/bookings/${bookingId}/cancel`, {}); // token attached by interceptor
       alert("Booking cancelled ✅");
-      loadBookings(); // refresh list
+      loadBookings();
     } catch (err) {
+      console.error(err);
       alert(err?.response?.data?.message || "Cancel failed");
     }
   };
@@ -62,19 +59,35 @@ export default function MyBookings() {
             border: "1px solid #ccc",
             margin: "10px 0",
             padding: "12px",
-            borderRadius: "8px"
+            borderRadius: "8px",
           }}
         >
-          <p><b>Booking ID:</b> {b._id}</p>
-          <p><b>Status:</b> {b.status}</p>
-          <p><b>Seats:</b> {b.seats?.join(", ")}</p>
-          <p><b>Total Price:</b> ${b.totalPrice}</p>
+          <p>
+            <b>Booking ID:</b> {b._id}
+          </p>
+          <p>
+            <b>Status:</b> {b.status}
+          </p>
+          <p>
+            <b>Seats:</b> {b.seats?.join(", ") || "N/A"}
+          </p>
+          <p>
+            <b>Total Price:</b> ${b.totalPrice}
+          </p>
 
           <hr />
 
-          <p><b>Route:</b> {b.schedule?.route?.from} → {b.schedule?.route?.to}</p>
-          <p><b>Bus:</b> {b.schedule?.bus?.busName}</p>
-          <p><b>Date:</b> {b.schedule?.travelDate} | <b>Time:</b> {b.schedule?.departureTime}</p>
+          <p>
+            <b>Route:</b> {b.schedule?.route?.from || "Unknown"} →{" "}
+            {b.schedule?.route?.to || "Unknown"}
+          </p>
+          <p>
+            <b>Bus:</b> {b.schedule?.bus?.busName || "N/A"}
+          </p>
+          <p>
+            <b>Date:</b> {b.schedule?.travelDate} | <b>Time:</b>{" "}
+            {b.schedule?.departureTime}
+          </p>
 
           {b.status !== "cancelled" && (
             <button

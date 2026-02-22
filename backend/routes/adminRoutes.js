@@ -29,6 +29,42 @@ router.get("/routes", protect, admin, async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
+// ✅ CREATE BUS
+router.post("/buses", protect, admin, async (req, res) => {
+  try {
+    const { busName, totalSeats } = req.body;
+
+    if (!busName || !totalSeats) {
+      return res.status(400).json({ message: "busName and totalSeats are required" });
+    }
+
+    const bus = await Bus.create({
+      busName,
+      totalSeats: Number(totalSeats),
+    });
+
+    res.status(201).json({ message: "Bus created ✅", bus });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// ✅ CREATE ROUTE
+router.post("/routes", protect, admin, async (req, res) => {
+  try {
+    const { from, to } = req.body;
+
+    if (!from || !to) {
+      return res.status(400).json({ message: "from and to are required" });
+    }
+
+    const route = await Route.create({ from, to });
+
+    res.status(201).json({ message: "Route created ✅", route });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 // POST create schedule
 router.post("/schedules", protect, admin, async (req, res) => {
   try {

@@ -32,20 +32,21 @@ router.get("/routes", protect, admin, async (req, res) => {
 // ✅ CREATE BUS
 router.post("/buses", protect, admin, async (req, res) => {
   try {
-    const { busName, totalSeats } = req.body;
+    const { busNumber, busName, totalSeats } = req.body;
 
-    if (!busName || !totalSeats) {
-      return res.status(400).json({ message: "busName and totalSeats are required" });
+    if (!busNumber || !busName) {
+      return res.status(400).json({ message: "busNumber and busName are required" });
     }
 
     const bus = await Bus.create({
-      busName,
-      totalSeats: Number(totalSeats),
+      busNumber: String(busNumber).trim(),
+      busName: String(busName).trim(),
+      totalSeats: totalSeats ? Number(totalSeats) : 40,
     });
 
     res.status(201).json({ message: "Bus created ✅", bus });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(400).json({ message: err.message });
   }
 });
 

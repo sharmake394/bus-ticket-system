@@ -10,7 +10,6 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // If already logged in, go home
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) navigate("/", { replace: true });
@@ -27,10 +26,8 @@ export default function Login() {
       });
 
       localStorage.setItem("token", res.data.token);
-
       alert("Login successful ✅");
 
-      // optional redirect to intended page
       const next = searchParams.get("next");
       navigate(next || "/", { replace: true });
     } catch (err) {
@@ -42,14 +39,15 @@ export default function Login() {
   };
 
   return (
-    <div style={{ padding: 20, maxWidth: 400 }}>
-      <h2>Login</h2>
+    <div className="card" style={{ maxWidth: 420 }}>
+      <h2 className="page-title">Login</h2>
+      <p className="muted">Use your account to book seats and view bookings.</p>
 
       <form onSubmit={handleLogin}>
         <div style={{ marginBottom: 10 }}>
-          <label>Email</label>
+          <label className="muted">Email</label>
           <input
-            style={{ width: "100%", padding: 8 }}
+            className="input"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             type="email"
@@ -59,9 +57,9 @@ export default function Login() {
         </div>
 
         <div style={{ marginBottom: 10 }}>
-          <label>Password</label>
+          <label className="muted">Password</label>
           <input
-            style={{ width: "100%", padding: 8 }}
+            className="input"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             type="password"
@@ -70,7 +68,7 @@ export default function Login() {
           />
         </div>
 
-        <button disabled={loading} style={{ padding: "8px 12px" }}>
+        <button className="btn btn-primary" disabled={loading}>
           {loading ? "Logging in..." : "Login"}
         </button>
       </form>

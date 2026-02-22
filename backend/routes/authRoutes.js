@@ -56,7 +56,7 @@ router.post("/login", async (req, res) => {
 });
 
 // ✅ ME (Protected)
-router.get("/me", protect, (req, res) => {
+router.get("/me", protect, async (req, res) => {
   res.json({ message: "You are authenticated ✅", user: req.user });
 });
 

@@ -10,7 +10,7 @@ export default function MyBookings() {
   const loadBookings = async () => {
     try {
       setLoading(true);
-      const res = await api.get("/api/bookings/my"); // token attached by interceptor
+      const res = await api.get("/api/bookings/my");
       setBookings(res.data || []);
     } catch (err) {
       console.error(err);
@@ -33,7 +33,7 @@ export default function MyBookings() {
 
   const cancelBooking = async (bookingId) => {
     try {
-      await api.patch(`/api/bookings/${bookingId}/cancel`, {}); // token attached by interceptor
+      await api.patch(`/api/bookings/${bookingId}/cancel`, {});
       alert("Booking cancelled ✅");
       loadBookings();
     } catch (err) {
@@ -42,60 +42,37 @@ export default function MyBookings() {
     }
   };
 
-  if (loading) return <div style={{ padding: 20 }}>Loading...</div>;
+  if (loading) return <div>Loading...</div>;
 
   return (
-    <div style={{ padding: 20 }}>
-      <button onClick={() => navigate("/")}>← Back</button>
+    <div>
+      <button className="btn" onClick={() => navigate("/")}>← Back</button>
+      <h2 className="page-title">My Bookings</h2>
 
-      <h2 style={{ marginTop: 10 }}>My Bookings</h2>
-
-      {bookings.length === 0 && <p>No bookings found.</p>}
+      {bookings.length === 0 && (
+        <div className="card">
+          <p className="muted">No bookings found.</p>
+        </div>
+      )}
 
       {bookings.map((b) => (
-        <div
-          key={b._id}
-          style={{
-            border: "1px solid #ccc",
-            margin: "10px 0",
-            padding: "12px",
-            borderRadius: "8px",
-          }}
-        >
-          <p>
-            <b>Booking ID:</b> {b._id}
-          </p>
-          <p>
-            <b>Status:</b> {b.status}
-          </p>
-          <p>
-            <b>Seats:</b> {b.seats?.join(", ") || "N/A"}
-          </p>
-          <p>
-            <b>Total Price:</b> ${b.totalPrice}
-          </p>
-
-          <hr />
-
-          <p>
-            <b>Route:</b> {b.schedule?.route?.from || "Unknown"} →{" "}
-            {b.schedule?.route?.to || "Unknown"}
-          </p>
-          <p>
-            <b>Bus:</b> {b.schedule?.bus?.busName || "N/A"}
-          </p>
-          <p>
-            <b>Date:</b> {b.schedule?.travelDate} | <b>Time:</b>{" "}
-            {b.schedule?.departureTime}
-          </p>
+        <div key={b._id} className="card">
+          <div className="muted">
+            <div><b>Status:</b> {b.status}</div>
+            <div><b>Seats:</b> {b.seats?.join(", ") || "N/A"}</div>
+            <div><b>Total Price:</b> ${b.totalPrice}</div>
+            <hr style={{ borderColor: "rgba(255,255,255,.12)" }} />
+            <div><b>Route:</b> {b.schedule?.route?.from || "Unknown"} → {b.schedule?.route?.to || "Unknown"}</div>
+            <div><b>Bus:</b> {b.schedule?.bus?.busName || "N/A"}</div>
+            <div><b>Date:</b> {b.schedule?.travelDate} • <b>Time:</b> {b.schedule?.departureTime}</div>
+          </div>
 
           {b.status !== "cancelled" && (
-            <button
-              onClick={() => cancelBooking(b._id)}
-              style={{ marginTop: 10, padding: "8px 14px", cursor: "pointer" }}
-            >
-              Cancel Booking
-            </button>
+            <div style={{ marginTop: 12 }}>
+              <button className="btn btn-danger" onClick={() => cancelBooking(b._id)}>
+                Cancel Booking
+              </button>
+            </div>
           )}
         </div>
       ))}

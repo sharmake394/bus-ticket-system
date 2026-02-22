@@ -14,7 +14,6 @@ export default function Layout() {
         const res = await api.get("/api/auth/me");
         setMe(res.data?.user || null);
       } catch {
-        // token invalid/expired
         localStorage.removeItem("token");
         setMe(null);
       }
@@ -30,37 +29,33 @@ export default function Layout() {
 
   return (
     <div>
-      <div
-        style={{
-          display: "flex",
-          gap: 14,
-          alignItems: "center",
-          padding: 14,
-          borderBottom: "1px solid #ddd",
-        }}
-      >
-        <Link to="/" style={{ fontWeight: "bold" }}>Home</Link>
+      <div className="nav">
+        <div className="nav-inner">
+          <Link to="/" className="brand">Bus Ticket System</Link>
 
-        {token && <Link to="/my-bookings">My Bookings</Link>}
+          <Link to="/">Home</Link>
 
-        {me?.role === "admin" && (
-          <>
-            <Link to="/admin/add-bus">Add Bus</Link>
-            <Link to="/admin/add-route">Add Route</Link>
-            <Link to="/admin/add-schedule">Add Schedule</Link>
-          </>
-        )}
+          {token && <Link to="/my-bookings">My Bookings</Link>}
 
-        <div style={{ marginLeft: "auto" }}>
+          {me?.role === "admin" && (
+            <>
+              <Link to="/admin/add-bus">Add Bus</Link>
+              <Link to="/admin/add-route">Add Route</Link>
+              <Link to="/admin/add-schedule">Add Schedule</Link>
+            </>
+          )}
+
+          <div className="spacer" />
+
           {token ? (
-            <button onClick={logout}>Logout</button>
+            <button className="btn" onClick={logout}>Logout</button>
           ) : (
-            <Link to="/login">Login</Link>
+            <Link className="btn" to="/login">Login</Link>
           )}
         </div>
       </div>
 
-      <div style={{ padding: 16 }}>
+      <div className="container">
         <Outlet />
       </div>
     </div>

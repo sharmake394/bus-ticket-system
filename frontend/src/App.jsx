@@ -12,7 +12,7 @@ import MyBookings from "./pages/MyBookings";
 import AddBus from "./pages/admin/AddBus";
 import AddRoute from "./pages/admin/AddRoute";
 import AddSchedule from "./pages/admin/AddSchedule";
-import NotFound from "./pages/NotFound";
+import NotFound from "./pages/Notfound.jsx";
 
 function App() {
   return (

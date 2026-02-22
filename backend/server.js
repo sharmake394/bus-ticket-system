@@ -32,12 +32,16 @@ app.get("/", (req, res) => {
   res.send("Bus Ticket System API is running");
 });
 
-mongoose.connect(process.env.MONGO_URI)
-.then(() => console.log("MongoDB connected"))
-.catch(err => console.error(err));
+mongoose
+  .connect(process.env.MONGO_URI, {
+    serverSelectionTimeoutMS: 20000,
+  })
+  .then(() => console.log("MongoDB connected ✅"))
+  .catch((err) => console.error("MongoDB connection error ❌:", err.message));
 
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
   console.log("Server running on port " + PORT);
+  console.log("MONGO_URI exists?", !!process.env.MONGO_URI);
 });

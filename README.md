@@ -1,22 +1,62 @@
-# Bus Ticket System
+# 🚌 Bus Ticket Booking System (MERN Stack)
 
-A full-stack bus ticket booking system built with:
-- Node.js + Express
-- MongoDB
+A full-stack **Bus Ticket Booking System** built using the **MERN stack** (MongoDB, Express, React, Node.js).  
+The system allows users to view bus schedules, select seats, book tickets, and manage bookings, while administrators can manage buses, routes, and schedules.
+
+---
+
+## 🌐 Live Links
+
+- **Frontend (Netlify):** https://bus-ticketsystem.netlify.app  
+- **Backend API (Render):** https://bus-ticket-system-jytd.onrender.com  
+
+---
+
+## ✨ Features
+
+### 👤 User Features
+- User registration & login (JWT authentication)
+- View available bus schedules
+- Select seats visually
+- Book tickets
+- View personal bookings
+- Cancel bookings
+
+### 🛠 Admin Features
+- Add buses
+- Add routes
+- Create schedules
+- View all system data
+- Role-based access control (Admin only)
+
+---
+
+## 🧱 Tech Stack
+
+### Frontend
 - React (Vite)
+- React Router
+- Axios
+- CSS (Custom Dark Theme)
+- Netlify (Deployment)
 
-## Features
-- User authentication
-- Bus & route management (admin)
-- Schedule creation
-- Seat selection & booking
-- Booking history
+### Backend
+- Node.js
+- Express.js
+- MongoDB (Atlas)
+- Mongoose
+- JWT Authentication
+- Render (Deployment)
 
-## Setup
-1. Clone the repo
-2. Install dependencies in `backend` and `frontend`
-3. Add `.env` files
-4. Run backend and frontend
+---
+
+## 🔐 Security
+- Passwords hashed using bcrypt
+- JWT authentication with protected routes
+- Environment variables used for sensitive data
+- Role-based authorization for admin routes
+
+---
 
 ## 📸 Screenshots
 
@@ -37,3 +77,13 @@ A full-stack bus ticket booking system built with:
 
 ### Login Page
 ![Login](screenshots/login.png)
+
+---
+
+## ⚙️ Installation (Local Setup)
+
+### Backend
+```bash
+cd backend
+npm install
+npm run dev

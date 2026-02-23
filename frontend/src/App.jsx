@@ -12,7 +12,8 @@ import MyBookings from "./pages/MyBookings";
 import AddBus from "./pages/admin/AddBus";
 import AddRoute from "./pages/admin/AddRoute";
 import AddSchedule from "./pages/admin/AddSchedule";
-import NotFound from "./pages/Notfound.jsx";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import NotFound from "./pages/NotFound.jsx";
 
 function App() {
   return (
@@ -33,6 +34,15 @@ function App() {
         />
 
         <Route
+          path="/admin"
+          element={
+            <AdminRoute>
+              <AdminDashboard />
+            </AdminRoute>
+          }
+        />
+
+        <Route
           path="/admin/add-bus"
           element={
             <AdminRoute>
@@ -40,6 +50,7 @@ function App() {
             </AdminRoute>
           }
         />
+
         <Route
           path="/admin/add-route"
           element={
@@ -48,6 +59,7 @@ function App() {
             </AdminRoute>
           }
         />
+
         <Route
           path="/admin/add-schedule"
           element={

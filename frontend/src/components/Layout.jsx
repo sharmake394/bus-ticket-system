@@ -39,6 +39,7 @@ export default function Layout() {
 
           {me?.role === "admin" && (
             <>
+              <Link to="/admin">Dashboard</Link>
               <Link to="/admin/add-bus">Add Bus</Link>
               <Link to="/admin/add-route">Add Route</Link>
               <Link to="/admin/add-schedule">Add Schedule</Link>
